@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak | Premium Salami Experience</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Hind+Siliguri:wght@300;600&family=Noto+Serif+Bengali:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --dark-green: #00291B;
+            --deep-emerald: #004D34;
+            --bkash-pink: #e2136e;
+            --glass: rgba(255, 255, 255, 0.08);
+            --text-light: #F3E5AB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--dark-green);
+            font-family: 'Hind Siliguri', sans-serif;
+            color: var(--text-light);
+            overflow: hidden;
+        }
+
+        /* Smooth Scroll Container */
+        .main-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+        }
+        .main-container::-webkit-scrollbar { display: none; }
+
+        section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Background Pattern - Jamdani/Islamic Mix */
+        .bg-pattern {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        /* --- Page 1: Hero --- */
+        #hero { background: radial-gradient(circle at center, var(--deep-emerald), var(--dark-green)); }
+        
+        .crescent-container {
+            position: relative;
+            z-index: 2;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .crescent-img {
+            width: 150px;
+            filter: drop-shadow(0 0 20px var(--gold));
+        }
+
+        .eid-title {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            color: var(--gold);
+            text-align: center;
+            margin-top: 20px;
+            z-index: 2;
+        }
+
+        .arabic-text {
+            font-size: 2.5rem;
+            opacity: 0.7;
+            margin-top: -10px;
+            z-index: 2;
+        }
+
+        /* --- Page 2: Greetings --- */
+        #greetings { background: #003323; }
+        
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 40px 0 40px 0; /* Asymmetric elegant border */
+            padding: 50px 30px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        .message-bn {
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .message-en {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d1d1d1;
+        }
+
+        /* --- Page 3: Salami (QR + Number) --- */
+        #salami { background: #001a11; }
+
+        .salami-card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 25px;
+            color: #333;
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 0 10px rgba(212, 175, 55, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .salami-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+
+        .qr-wrapper {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 2px dashed #ddd;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .qr-img {
+            width: 180px;
+            height: 180px;
+            display: block;
+        }
+
+        .number-display {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--bkash-pink);
+            letter-spacing: 2px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: var(--bkash-pink);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: 'Hind Siliguri';
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover { background: #b30f57; }
+
+        .bkash-footer {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .bkash-logo-small { width: 70px; }
+
+        /* General Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 25px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <!-- PAGE 1: EID MUBARAK -->
+        <section id="hero">
+            <div class="bg-pattern"></div>
+            <div class="crescent-container">
+                <img src="https://image2url.com/r2/default/images/1773942037484-60330451-07bd-4090-965e-21a12cd2bada.png" class="crescent-img" alt="Crescent Moon">
+            </div>
+            <h1 class="eid-title">Eid Mubarak</h1>
+            <p class="arabic-text">عيد مبارك</p>
+            <div class="scroll-hint">Scroll Down</div>
+        </section>
+
+        <!-- PAGE 2: MESSAGE -->
+        <section id="greetings">
+            <div class="bg-pattern"></div>
+            <div class="glass-card">
+                <h2 class="message-bn">ঈদের এই আনন্দ ছড়িয়ে পড়ুক সবার মনে, কাটুক প্রতিটি দিন হাসি-খুশিতে</h2>
+                <p class="message-en">
+                    Wishing you a very happy and peaceful Eid. May this year bring continued success and prosperity to you and your family!
+                    <br><br>
+                    <span style="font-style: italic; color: var(--gold); font-family: 'Playfair Display';">- Mazba Rafi</span>
+                </p>
+            </div>
+            <div class="scroll-hint">SCROLL DOWN</div>
+        </section>
+
+        <!-- PAGE 3: SALAMI (QR + NUMBER) -->
+        <section id="salami" onmouseenter="fireConfetti()">
+            <div class="bg-pattern"></div>
+            
+            <div class="salami-card">
+                <h2>Eid Salami</h2>
+                <p style="font-size: 0.85rem; color: #777;">সালামি পাঠাতে নিচের কিউআর কোডটি স্ক্যান করুন</p>
+                
+                <div class="qr-wrapper">
+                    <!-- Automatically generates QR for the number provided below -->
+                    <img id="qr-Image" src="https://image2url.com/r2/default/images/1773943465360-bc1933f8-c74f-4ce1-a8b1-d54397426184.jfif" class="qr-img" alt="bKash QR">
+                </div>
+
+                <div class="number-display" id="bkashNumber">
+                    01601024222
+                </div>
+                <button class="copy-btn" onclick="copyNumber()">Copy Number</button>
+
+                <div class="bkash-footer">
+                    <span>Send Money via</span>
+                    <img src="https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg" class="bkash-logo-small" alt="bKash">
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; color: var(--gold); font-size: 0.9rem;">আল্লাহ আপনার মঙ্গল করুন!</p>
+        </section>
+
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const MY_NUMBER = "01601024222"; // <--- CHANGE YOUR NUMBER HERE
+        const YOUR_NAME = "Your Name";   // <--- CHANGE YOUR NAME HERE
+
+        // Set the data on load
+        document.getElementById('bkashNumber').innerText = MY_NUMBER;
+        document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=tel:${MY_NUMBER}&color=e2136e`;
+
+        // Copy Number Function
+        function copyNumber() {
+            navigator.clipboard.writeText(MY_NUMBER);
+            const btn = document.querySelector('.copy-btn');
+            btn.innerText = "Copied!";
+            btn.style.background = "#28a745";
+            setTimeout(() => {
+                btn.innerText = "Copy Number";
+                btn.style.background = "#e2136e";
+            }, 2000);
+        }
+
+        // Confetti Effect
+        function fireConfetti() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#D4AF37', '#e2136e', '#ffffff', '#004D34']
+            });
+        }
+    </script>
+</body>
+</html>
